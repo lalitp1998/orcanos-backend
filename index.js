@@ -135,45 +135,17 @@ app.post('/getdata', async (req, res) => {
 app.post('/updatedata', async (req, res) => {
   try {
     const { responseObject, url, username, password } = req.body;
-    const { Object_ID, Object_Name, Description } = responseObject;
+    // const { Object_ID, Object_Name, Description } = responseObject;
     const token = `${username}:${password}`;
     const encodedToken = Buffer.from(token).toString('base64');
     const session_url = `${url}/api/v2/Json/QW_Update_Object`;
     
-    
-    const data = {
-      "Updated_Date": "",
-      "Updated_By": "",
-      "Object_ID": Object_ID,
-      "View_Version": "",
-      "Make_Branch": "",
-      "Object_Name": Object_Name,
-      "Description": Description,
-      "Release_Version": "",
-      "Build_Version": "",
-      "Assigned_to": "",
-      "Customer_ID": "",
-      "Site_ID": "",
-      "Category": "",
-      "Status": "",
-      "Priority": "",
-      "Start_date": "",
-      "Effort_estimation": "",
-      "Due_date": "",
-      "CS1_Name": "",
-      "CS1_value": "",
-      "Up to CS60_Name": "",
-      "Up to CS60_value": "",
-      "Insert_to_Pool": "",
-      "MigrationReference": "",
-      "External_ID": ""
-    };
 
     const config = {
       method: 'post',
       url: session_url,
       headers: { 'Authorization': 'Basic ' + encodedToken },
-      data: data
+      data: responseObject
     };
 
     const response = await axios(config);
