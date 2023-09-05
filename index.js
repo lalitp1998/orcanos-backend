@@ -156,7 +156,7 @@ app.post('/updatedata', async (req, res) => {
         Message: 'Object updated successfully',
         HttpCode: 200
       };
-      return res.status(200).send(responseData);
+      return res.status(200).send({data:response.data});
     } else {
       return res.status(response.status).send({ message: 'Error updating data' });
     }
