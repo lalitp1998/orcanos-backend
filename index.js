@@ -184,7 +184,7 @@ app.post('/updateDefect', async (req, res) => {
     if (response.status === 200) {
       const responseData = {
         IsSuccess: true,
-        Data: data.Object_ID, 
+        Data: responseObject.Object_ID, 
         Message: 'Object updated successfully',
         HttpCode: 200
       };
