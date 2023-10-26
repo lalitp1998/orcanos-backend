@@ -165,7 +165,38 @@ app.post('/updatedata', async (req, res) => {
     return res.status(500).send({ message: 'Internal server error' });
   }
 });
+app.post('/updateDefect', async (req, res) => {
+  try {
+    const { responseObject, url, username, password } = req.body;
+    const token = `${username}:${password}`;
+    const encodedToken = Buffer.from(token).toString('base64');
+    const session_url = `${url}/api/v2/Json/QW_Update_Defect`;
+    
 
+    const config = {
+      method: 'post',
+      url: session_url,
+      headers: { 'Authorization': 'Basic ' + encodedToken },
+      data: responseObject
+    };
+
+    const response = await axios(config);
+    if (response.status === 200) {
+      const responseData = {
+        IsSuccess: true,
+        Data: data.Object_ID, 
+        Message: 'Object updated successfully',
+        HttpCode: 200
+      };
+      return res.status(200).send(responseData);
+    } else {
+      return res.status(response.status).send({ message: 'Error updating data' });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ message: 'Internal server error' });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
