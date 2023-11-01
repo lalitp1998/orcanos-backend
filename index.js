@@ -136,7 +136,7 @@ app.post('/getItemdata', async (req, res) => {
     const { Item_id, Item_Type, url, username, password } = req.body;
     const token = `${username}:${password}`;
     const encodedToken = Buffer.from(token).toString('base64');
-    const session_url = `${url}/api/v2/Json/QW_Get_Item_Add_Edit`;
+    const session_url = `${url}/api/v2/Json/QW_Get_Object_View`;
 
     const data = {
       "Item_id": Item_id,
