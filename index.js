@@ -129,7 +129,41 @@ app.post('/getdata', async (req, res) => {
   }
 });
 
+app.post('/getItemdata', async (req, res) => {
+  
 
+  try {
+    const { Item_id, Item_Type, url, username, password } = req.body;
+    const token = `${username}:${password}`;
+    const encodedToken = Buffer.from(token).toString('base64');
+    const session_url = `${url}/api/v2/Json/QW_Get_Item_Add_Edit`;
+
+    const data = {
+      "Item_id": Item_id,
+      "Item_Type": Item_Type,
+      "Ver_Id": "",
+      "IsParseDynamicFilter":0
+    };
+    const config = {
+      method: 'post',
+      url: session_url,
+      headers: { 'Authorization': 'Basic ' + encodedToken },
+      data: data
+    };
+
+    const response = await axios(config);
+    console.log("RESPONSE",response)
+
+    if (response.status === 200) {
+      return res.status(200).send({ message: 'Data fetched successfully', data: response.data });
+    } else {
+      return res.status(response.status).send({ message: 'Error fetching data' });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ message: 'Internal server error' });
+  }
+});
 
 
 app.post('/updatedata', async (req, res) => {
